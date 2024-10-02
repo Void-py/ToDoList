@@ -6,22 +6,12 @@ import openpyxl
 from openpyxl import load_workbook
 from tkinter import messagebox
 from tkinter import ttk
-import pyttsx3
-
-
-
+import pandas as pd
 class Window(Tk):
-
-    def speech_moderation(self,text_1):
-        engine = pyttsx3.init()
-        engine.connect('started-utterance',cb=None)
-        engine.say(text_1)
-        engine.runAndWait()
-        engine.stop()
-
     def __init__(self):
         super().__init__()
-        self.user_data = load_workbook(filename=r"Assets\user_data.xlsx")
+        report_path = 'Assets\\user_data.xlsx'
+        self.user_data = load_workbook(report_path)
         self.configure(cursor="cross")
         self.wm_iconbitmap(r"Assets\icon.ico")
         self.sheet_1 = self.user_data["Sheet1"]
@@ -31,7 +21,7 @@ class Window(Tk):
         self.font_all = font.Font(family="Comic Sans MS",weight="bold")
         self.tree_font = font.Font(family="Century Gothic",weight="normal",size=10)
         self.bg_image1 = ImageTk.PhotoImage(Image.open(r"Assets\bg_1.jpg"))
-        self.resizable(0,0)
+        self.resizable(0,0) 
         self.label_1 = Label(self, image=self.bg_image1)
         self.label_1.place(x=0, y=0)
         self.label_2 = Label(self, text="Hello User ,Please enter your name and password down below to proceed",
@@ -50,7 +40,6 @@ class Window(Tk):
         self.new_lb_2.place(x=60, y=240)
         self.entry_2.place(x=250, y=240)
         self.update()
-        self.speech_moderation("Hello User, Please enter your name and password down below to proceed")
     def get_user(self):
         global user_def_run
         global current_username
@@ -185,10 +174,8 @@ class Window(Tk):
                 treeview_1.place(x=120,y=200)
                 self.update()
                 mainframe_1.update()
-                self.speech_moderation(stat_1)
         except TypeError:
             self.destroy()
-            self.speech_moderation("Greetings user ,your account has been successfully created. Please login to proceed")
             self.__init__()
             messagebox.showinfo("Saved", "Greetings user ,your name has been successfully created")
 
@@ -210,9 +197,7 @@ class Window(Tk):
                 self.update_existing()
                 self.mainframe_1()
                 mainframe_1.update()
-                self.speech_moderation("The following element has been successfully removed from the table, returning the new tabular space")
             except ValueError:
-                self.speech_moderation("Please make sure you have selected an element from the tabulation depicted")
                 messagebox.showerror("ValueError","Please select an element from the tabulation")
 
         def modify_be():
@@ -303,7 +288,6 @@ class Window(Tk):
                                   command=lambda: modify_be())
                 button_5.place(x=395, y=175)
                 mainframe_3.update()
-                self.speech_moderation("Greetings user, this window is used to modify the current elements in the tabular space. The text box representes the name tag, the spinboxes represent the time tags, the checkbox reprsents the current status of work")
             except(ValueError):
                 messagebox.showerror(title="Invalid",message="Please select an option from the listbox")
                 mainframe_3.destroy()
@@ -386,7 +370,6 @@ class Window(Tk):
             button_4 = Button(mainframe_2,text="ADD",fg="black",bg="lime green",relief=RIDGE,bd=5,activebackground="black",activeforeground="white",font=self.font_all,width=6,command=lambda :append_be())
             button_4.place(x=395,y=175)
             mainframe_2.update()
-            self.speech_moderation("Greetings user, this window is used to add an element to the tabular space. The text box representes the name tag, the spinboxes represent the time tags, the checkbox reprsents the current status of work")
 
 
 if __name__ == '__main__':
